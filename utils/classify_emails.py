@@ -7,8 +7,8 @@ import json
 import time
 import re
 
-from model_caller import call_model
-from generate_prompt import generate_prompt
+from utils.model_loader import call_model
+from ai.generate_prompt import generate_prompt
 from project_utils import print_model_status, log_result, get_current_model
 
 INPUT_FILE = "emails.jsonl"

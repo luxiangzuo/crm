@@ -6,4 +6,11 @@ python-dotenv            # 读取 .env 配置
 google-auth>=2.0.0
 google-auth-oauthlib
 google-api-python-client
+langchain openai faiss-cpu
 
+# requirements.txt
+openai>=1.0.0
+langchain>=0.1.0
+faiss-cpu
+tiktoken
+python-dotenv

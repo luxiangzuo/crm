@@ -110,6 +110,30 @@ def post_to_crm(entity, data):
     else:
         print(f"❌ 导入失败: {entity} - {response.status_code}: {response.text}")
 
+
+
+
+def update_opportunity_note(opportunity_id, reply_text):
+    """
+    将生成的 AI 回复内容更新到 CRM 中指定 Opportunity 的 description 字段。
+    """
+    from config import ESPOTCRM_URL
+    import requests
+    from .push_to_crm import get_auth  # 确保 get_auth 存在
+
+    url = f"{ESPOTCRM_URL}/api/v1/Opportunity/{opportunity_id}"
+    data = {
+        "description": reply_text[:1000]  # 可根据字段限制截断
+    }
+    response = requests.patch(url, json=data, auth=get_auth())
+    if response.status_code in [200, 204]:
+        print(f"✅ 回信内容已更新至 CRM - Opportunity {opportunity_id}")
+    else:
+        print(f"❌ 更新失败: {response.status_code} - {response.text}")
+
+
+
+
 # 主逻辑
 def main():
     emails = read_emails(EMAIL_FILE)
