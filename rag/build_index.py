@@ -1,12 +1,15 @@
 # rag/build_index.py
 from dotenv import load_dotenv
 load_dotenv()
-
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from langchain.vectorstores import FAISS
 from utils.embedding_loader import load_embedding_model
 from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
+from utils.embedding_loader import load_embedding_model
 
 def load_markdown_files(root_dir):
     all_chunks = []
