@@ -6,13 +6,20 @@
 import json
 import time
 import re
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from utils.model_loader import call_model
-from ai.generate_prompt import generate_prompt
-from project_utils import print_model_status, log_result, get_current_model
+from prompt.generate_prompt import generate_prompt
+from utils.project_utils import print_model_status, log_result, get_current_model
+from logs.run import log_result, log_error, log_prompt
 
-INPUT_FILE = "emails.jsonl"
-OUTPUT_FILE = "emails_classified.jsonl"
+
+
+INPUT_FILE = "data/emails.jsonl"
+OUTPUT_FILE = "data/emails_classified.jsonl"
+
 
 def extract_json(text):
     try:
@@ -31,6 +38,11 @@ def classify_email(email):
         return None
 
 def classify_email_with_retry(email, retries=3, delay=3):
+    prompt = generate_prompt(email)  # ✨生成 prompt
+    email_id = email.get("id", "unknown")
+
+    log_prompt(email_id, prompt)  # 📝日志记录 prompt
+
     for attempt in range(retries):
         try:
             label = classify_email(email)
@@ -43,10 +55,13 @@ def classify_email_with_retry(email, retries=3, delay=3):
                     "stage": label.get("stage", "unknown"),
                     "model_used": get_current_model()
                 }
+                log_result(email_id, "success", result["model_used"])  # ✅ 成功日志
                 return result
         except Exception as e:
+            log_error(email_id, str(e))  # ❌ 错误日志
             print(f"❌ Attempt {attempt+1} failed: {e}")
             time.sleep(delay)
+
     return None
 
 def main():

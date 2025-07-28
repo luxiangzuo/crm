@@ -70,6 +70,36 @@ tiktoken
 python-dotenv
 ```
 
+
+
+
 ---
 
-🦊 若有任何问题，请联系鸮鸮或妎妎技术部小狐狸
+## ✅ 使用方法：
+
+只需访问一次这个链接：
+
+```
+http://localhost:8000/hubspot/refresh_token
+```
+
+刷新成功后，你就可以再次访问：
+
+```
+http://localhost:8000/hubspot/get_contacts
+```
+
+🎉 正常返回联系人列表啦！
+
+
+conda activate jcore
+cd crm_clean
+uvicorn api.main:app --reload
+
+uvicorn app:app --reload
+
+http://localhost:8000/docs
+
+python api/test.py
+
+

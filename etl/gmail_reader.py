@@ -3,12 +3,18 @@ from googleapiclient.discovery import build
 import base64
 import json
 import os
-
+from pathlib import Path
 # 设置作用域
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 def init_gmail_service():
-    flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+    
+
+    BASE_DIR = Path(__file__).resolve().parent          # crm_clean/
+    CLIENT_SECRET = BASE_DIR / 'data' / 'credentials.json'
+
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
+
     creds = flow.run_local_server(port=0)
     service = build('gmail', 'v1', credentials=creds)
     return service
