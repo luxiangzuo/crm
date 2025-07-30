@@ -111,3 +111,14 @@ def refresh_access_token_manual():
         json.dump(new_tokens, f)
 
     return {"✅ Token 刷新成功": new_tokens}
+
+
+
+
+# 核心职责是：
+
+# 管理 OAuth token 的生命周期（初次获取、刷新、存储）
+
+# 提供 get_valid_access_token() 工具函数供其他模块使用
+
+# 提供 /hubspot/oauth/callback FastAPI 路由接收授权码并换取 token

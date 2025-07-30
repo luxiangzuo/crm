@@ -1,19 +1,8 @@
-# api/main.py
-from fastapi import FastAPI, Request
-from ai.generate_sales_reply import generate_sales_reply_from_email
-from ai.main import router
+from fastapi import FastAPI
+from hubspot.router import router as hubspot_router
+from ai.router import router as ai_router
 
 app = FastAPI()
-app.include_router(router)
-@app.get("/")
-def home():
-    return {"msg": "API is running."}
 
-@app.post("/reply")
-async def generate_reply(req: Request):
-    data = await req.json()
-    name = data.get("name", "Customer")
-    email_text = data.get("email", "")
-
-    reply = generate_sales_reply_from_email(name, email_text)
-    return {"reply": reply}
+app.include_router(hubspot_router)
+app.include_router(ai_router)

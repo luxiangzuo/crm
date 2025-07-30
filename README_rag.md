@@ -94,12 +94,23 @@ http://localhost:8000/hubspot/get_contacts
 
 conda activate jcore
 cd crm_clean
-uvicorn api.main:app --reload
-
 uvicorn app:app --reload
 
 http://localhost:8000/docs
 
 python api/test.py
 
+uvicorn api.main:app --reload
 
+
+✅ 启动方式：
+uvicorn hubspot_oauth_server:app --reload
+然后在浏览器打开：
+http://localhost:8000/hubspot/get_contacts
+
+
+
+
+curl -X POST http://localhost:8000/upload-notes-by-email ^
+  -H "Content-Type: application/json" ^
+  -d @"C:\Users\xiao\crm_clean\data\test_notes.json"

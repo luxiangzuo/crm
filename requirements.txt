@@ -7,11 +7,12 @@ google-auth>=2.0.0
 google-auth-oauthlib
 google-api-python-client
 langchain openai faiss-cpu
-
+langchain==0.2.0
 # requirements.txt
 openai>=1.0.0
 langchain>=0.1.0
 faiss-cpu
 tiktoken
 python-dotenv
-install fastapi uvicorn
+fastapi uvicorn
+langchain-community
